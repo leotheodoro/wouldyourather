@@ -5,12 +5,7 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { httpBatchLink } from '@trpc/client';
 import { useState } from 'react';
 import { api } from '@/trpc/react';
-
-function getBaseUrl() {
-  if (typeof window !== 'undefined') return '';
-  if (process.env.VERCEL_URL) return `https://${process.env.VERCEL_URL}`;
-  return `http://localhost:${process.env.PORT ?? 3000}`;
-}
+import { getBaseUrl } from '@/trpc/utils';
 
 function makeQueryClient() {
   return new QueryClient({
