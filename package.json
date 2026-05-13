@@ -13,11 +13,15 @@
     "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.77",
+    "@ai-sdk/openai": "^3.0.63",
+    "@ai-sdk/react": "^3.0.184",
     "@tanstack/react-query": "^5.100.10",
     "@tanstack/react-query-devtools": "^5.100.10",
     "@trpc/client": "^11.17.0",
     "@trpc/react-query": "^11.17.0",
     "@trpc/server": "^11.17.0",
+    "ai": "^6.0.182",
     "drizzle-orm": "^0.45.2",
     "next": "16.2.6",
     "postgres": "^3.4.9",
