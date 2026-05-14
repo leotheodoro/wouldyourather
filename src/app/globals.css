@@ -1,1 +1,32 @@
 @import "tailwindcss";
+
+@theme {
+  --color-terminal-green: #00ff41;
+  --color-terminal-green-dim: #00b32c;
+  --color-terminal-green-dark: #005c16;
+  --color-terminal-green-muted: #2a5c2a;
+  --color-terminal-bg: #0a0a0a;
+  --color-terminal-border: #1a3a1a;
+}
+
+body {
+  background-color: var(--color-terminal-bg);
+  color: var(--color-terminal-green);
+  font-family: "Courier New", Courier, monospace;
+  min-height: 100vh;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 255, 65, 0.015) 2px,
+    rgba(0, 255, 65, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 9999;
+}
