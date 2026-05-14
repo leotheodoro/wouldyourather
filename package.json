@@ -16,6 +16,7 @@
     "@ai-sdk/anthropic": "^3.0.77",
     "@ai-sdk/openai": "^3.0.63",
     "@ai-sdk/react": "^3.0.184",
+    "@base-ui-components/react": "1.0.0-rc.0",
     "@tanstack/react-query": "^5.100.10",
     "@tanstack/react-query-devtools": "^5.100.10",
     "@trpc/client": "^11.17.0",
