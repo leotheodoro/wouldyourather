@@ -1,8 +1,7 @@
-import { createTRPCRouter } from './init';
+import { createTRPCRouter } from './init'
+import { shareRouter } from './routers/share'
 
 export const appRouter = createTRPCRouter({
-  // Register feature routers here:
-  // example: exampleRouter,
-});
-
-export type AppRouter = typeof appRouter;
+  share: shareRouter,
+})
+export type AppRouter = typeof appRouter

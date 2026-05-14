@@ -1,12 +1,11 @@
-// Add Drizzle table definitions here.
-// Example:
-// import { pgTable, serial, text, timestamp } from 'drizzle-orm/pg-core'
-//
-// export const questions = pgTable('questions', {
-//   id: serial('id').primaryKey(),
-//   optionA: text('option_a').notNull(),
-//   optionB: text('option_b').notNull(),
-//   createdAt: timestamp('created_at').defaultNow().notNull(),
-// })
+import { pgTable, text, jsonb, timestamp } from 'drizzle-orm/pg-core'
+import type { ArchetypeProfile, HistoryItem } from '@/types'
 
-export const tables = {};
+export const sharedProfiles = pgTable('shared_profiles', {
+  id: text('id').primaryKey().$defaultFn(() => crypto.randomUUID()),
+  profile: jsonb('profile').$type<ArchetypeProfile>().notNull(),
+  history: jsonb('history').$type<HistoryItem[]>().notNull(),
+  createdAt: timestamp('created_at').defaultNow().notNull(),
+})
+
+export const tables = { sharedProfiles }
