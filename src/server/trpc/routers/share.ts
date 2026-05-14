@@ -19,6 +19,7 @@ export const shareRouter = createTRPCRouter({
         .insert(sharedProfiles)
         .values({ profile: input.profile, history: input.history })
         .returning({ id: sharedProfiles.id })
+      if (!row) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Insert failed' })
       return { id: row.id }
     }),
 
