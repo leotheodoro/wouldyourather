@@ -15,10 +15,15 @@ export function ShareDialog({ shareId }: Props) {
 
   function handleCopy() {
     if (!shareUrl) return;
-    navigator.clipboard.writeText(shareUrl).then(() => {
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    });
+    navigator.clipboard.writeText(shareUrl).then(
+      () => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000);
+      },
+      () => {
+        // Clipboard unavailable (non-HTTPS or permission denied) — no-op
+      },
+    );
   }
 
   if (!shareId) return null;
