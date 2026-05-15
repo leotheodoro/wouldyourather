@@ -13,7 +13,7 @@ export function IntroScreen({ onStart }: Props) {
             {'PROTOCOLO MNEMOSYNE // v4.2.1 // INICIALIZANDO...'}
           </p>
           <h1 className="text-terminal-green text-2xl font-bold tracking-widest mb-6">
-            MORAL ROULETTE
+            WOULD YOU RATHER
           </h1>
           <div className="text-terminal-green-dim text-sm leading-loose space-y-1">
             <p>Bem-vindo ao Protocolo de Avaliação MNEMOSYNE.</p>

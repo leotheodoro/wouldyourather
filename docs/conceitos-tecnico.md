@@ -1,4 +1,4 @@
-# Conceitos Técnicos — Moral Roulette
+# Conceitos Técnicos — Would You Rather
 
 > Como eu explicaria em uma entrevista de emprego o que aprendi e implementei nesse projeto.
 
