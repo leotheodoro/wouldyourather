@@ -1,15 +1,20 @@
-'use client';
+"use client";
 
-import { useCallback, useRef, useState } from 'react';
-import { api } from '@/trpc/react';
-import type { ArchetypeProfile, DilemmaResponse, GameState, HistoryItem } from '@/types';
-import { useSSEStream } from './use-sse-stream';
+import { useCallback, useRef, useState } from "react";
+import { api } from "@/trpc/react";
+import type {
+  ArchetypeProfile,
+  DilemmaResponse,
+  GameState,
+  HistoryItem,
+} from "@/types";
+import { useSSEStream } from "./use-sse-stream";
 
 const TOTAL_DILEMMAS = 7;
 
 function initialState(): GameState {
   return {
-    phase: 'intro',
+    phase: "intro",
     dilemmaIndex: 0,
     history: [],
     currentDilemma: null,
@@ -20,7 +25,7 @@ function initialState(): GameState {
 
 export function useGameSession() {
   const [state, setState] = useState<GameState>(initialState);
-  const [streamedText, setStreamedText] = useState('');
+  const [streamedText, setStreamedText] = useState("");
   const [shareId, setShareId] = useState<string | null>(null);
   const { stream, streaming, error: streamError } = useSSEStream();
   const saveProfileMutation = api.share.saveProfile.useMutation();
@@ -34,24 +39,32 @@ export function useGameSession() {
 
   const loadDilemma = useCallback(
     (history: HistoryItem[]) => {
-      setState((s) => ({ ...s, phase: 'streaming', currentDilemma: null, error: null }));
-      setStreamedText('');
+      setState((s) => ({
+        ...s,
+        phase: "streaming",
+        currentDilemma: null,
+        error: null,
+      }));
+      setStreamedText("");
 
-      stream('/api/dilemma', { history }, addToken, (payload) => {
-        const data = (payload as { dilemmaResponse: DilemmaResponse }).dilemmaResponse;
+      stream("/api/dilemma", { history }, addToken, (payload) => {
+        const data = (payload as { dilemmaResponse: DilemmaResponse })
+          .dilemmaResponse;
         if (!data) return;
 
         setState((s) => {
           const updatedHistory =
             history.length > 0
               ? history.map((item, i) =>
-                  i === history.length - 1 ? { ...item, consequence: data.consequence } : item,
+                  i === history.length - 1
+                    ? { ...item, consequence: data.consequence }
+                    : item,
                 )
               : history;
 
           return {
             ...s,
-            phase: 'dilemma',
+            phase: "dilemma",
             currentDilemma: { text: data.dilemma, choices: data.choices },
             history: updatedHistory,
           };
@@ -63,15 +76,18 @@ export function useGameSession() {
 
   const loadProfile = useCallback(
     (history: HistoryItem[]) => {
-      setState((s) => ({ ...s, phase: 'streaming', error: null }));
-      setStreamedText('');
+      setState((s) => ({ ...s, phase: "streaming", error: null }));
+      setStreamedText("");
 
-      stream('/api/profile', { history }, addToken, async (payload) => {
+      stream("/api/profile", { history }, addToken, async (payload) => {
         const profile = (payload as { profile: ArchetypeProfile }).profile;
         if (!profile) return;
-        setState((s) => ({ ...s, phase: 'result', profile }));
+        setState((s) => ({ ...s, phase: "result", profile }));
         try {
-          const { id } = await saveProfileMutation.mutateAsync({ profile, history });
+          const { id } = await saveProfileMutation.mutateAsync({
+            profile,
+            history,
+          });
           setShareId(id);
         } catch {
           // Share saving failure is non-fatal — game still shows result
@@ -83,7 +99,7 @@ export function useGameSession() {
 
   const startGame = useCallback(() => {
     setState(initialState());
-    setStreamedText('');
+    setStreamedText("");
     setShareId(null);
     loadDilemma([]);
   }, [loadDilemma]);
@@ -91,13 +107,13 @@ export function useGameSession() {
   const choose = useCallback(
     (choiceIndex: 0 | 1) => {
       const s = stateRef.current;
-      if (!s.currentDilemma || s.phase !== 'dilemma') return;
+      if (!s.currentDilemma || s.phase !== "dilemma") return;
 
       const newItem: HistoryItem = {
         dilemma: s.currentDilemma.text,
         choices: s.currentDilemma.choices,
         chosen: choiceIndex,
-        consequence: '',
+        consequence: "",
       };
       const newHistory = [...s.history, newItem];
       const newIndex = s.dilemmaIndex + 1;
@@ -120,7 +136,7 @@ export function useGameSession() {
 
   const restart = useCallback(() => {
     setState(initialState());
-    setStreamedText('');
+    setStreamedText("");
     setShareId(null);
   }, []);
 

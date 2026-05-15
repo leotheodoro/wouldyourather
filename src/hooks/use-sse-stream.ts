@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
 type SSEPayload = Record<string, unknown>;
 
@@ -31,8 +31,8 @@ export function useSSEStream(): UseSSEStream {
 
       try {
         const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body),
         });
 
@@ -42,7 +42,7 @@ export function useSSEStream(): UseSSEStream {
 
         const reader = response.body!.getReader();
         const decoder = new TextDecoder();
-        let buffer = '';
+        let buffer = "";
         let receivedDone = false;
 
         while (true) {
@@ -50,11 +50,11 @@ export function useSSEStream(): UseSSEStream {
           if (done) break;
 
           buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split('\n');
-          buffer = lines.pop() ?? '';
+          const lines = buffer.split("\n");
+          buffer = lines.pop() ?? "";
 
           for (const line of lines) {
-            if (!line.startsWith('data: ')) continue;
+            if (!line.startsWith("data: ")) continue;
             const data = line.slice(6).trim();
             if (!data) continue;
 
@@ -64,13 +64,13 @@ export function useSSEStream(): UseSSEStream {
                 receivedDone = true;
                 setStreaming(false);
                 if (parsed.error) {
-                  setError('MNEMOSYNE não respondeu');
+                  setError("MNEMOSYNE não respondeu");
                 } else {
                   await onDone(parsed);
                 }
                 return;
               }
-              if (typeof parsed.token === 'string') {
+              if (typeof parsed.token === "string") {
                 onToken(parsed.token);
               }
             } catch {
@@ -80,11 +80,12 @@ export function useSSEStream(): UseSSEStream {
         }
 
         if (!receivedDone) {
-          setError('MNEMOSYNE não respondeu');
+          setError("MNEMOSYNE não respondeu");
           setStreaming(false);
         }
       } catch (err) {
-        const message = err instanceof Error ? err.message : 'Erro desconhecido';
+        const message =
+          err instanceof Error ? err.message : "Erro desconhecido";
         setError(message);
         setStreaming(false);
       }

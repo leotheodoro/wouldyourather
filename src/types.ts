@@ -27,7 +27,7 @@ export type ArchetypeProfile = {
   verdict: string;
 };
 
-export type GamePhase = 'intro' | 'streaming' | 'dilemma' | 'result';
+export type GamePhase = "intro" | "streaming" | "dilemma" | "result";
 
 export type GameState = {
   phase: GamePhase;

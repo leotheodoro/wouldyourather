@@ -14,7 +14,6 @@ export function GameSession() {
   }
 
   if (state.phase === 'result' || state.dilemmaIndex >= 7) {
-    if (!state.profile) return null;
     return (
       <ResultScreen
         profile={state.profile}

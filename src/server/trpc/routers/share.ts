@@ -1,10 +1,10 @@
-import 'server-only';
-import { TRPCError } from '@trpc/server';
-import { eq } from 'drizzle-orm';
-import { z } from 'zod';
-import { archetypeProfileSchema, historyItemSchema } from '@/lib/ai/validation';
-import { sharedProfiles } from '@/server/db/schema';
-import { createTRPCRouter, publicProcedure } from '../init';
+import "server-only";
+import { TRPCError } from "@trpc/server";
+import { eq } from "drizzle-orm";
+import { z } from "zod";
+import { archetypeProfileSchema, historyItemSchema } from "@/lib/ai/validation";
+import { sharedProfiles } from "@/server/db/schema";
+import { createTRPCRouter, publicProcedure } from "../init";
 
 export const shareRouter = createTRPCRouter({
   saveProfile: publicProcedure
@@ -19,7 +19,11 @@ export const shareRouter = createTRPCRouter({
         .insert(sharedProfiles)
         .values({ profile: input.profile, history: input.history })
         .returning({ id: sharedProfiles.id });
-      if (!row) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Insert failed' });
+      if (!row)
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: "Insert failed",
+        });
       return { id: row.id };
     }),
 
@@ -30,7 +34,11 @@ export const shareRouter = createTRPCRouter({
         .select()
         .from(sharedProfiles)
         .where(eq(sharedProfiles.id, input.id));
-      if (!row) throw new TRPCError({ code: 'NOT_FOUND', message: 'Perfil não encontrado' });
+      if (!row)
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Perfil não encontrado",
+        });
       return { profile: row.profile, history: row.history };
     }),
 });

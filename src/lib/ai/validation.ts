@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const dilemmaResponseSchema = z.object({
   consequence: z.string(),

@@ -7,9 +7,10 @@ import { TraitBar } from './trait-bar';
 type Props = {
   profile: ArchetypeProfile;
   shareId: string | null;
+  readOnly?: boolean;
 };
 
-export function ArchetypeCard({ profile, shareId }: Props) {
+export function ArchetypeCard({ profile, shareId, readOnly = false }: Props) {
   return (
     <div className="space-y-6 font-mono">
       <div>
@@ -32,16 +33,16 @@ export function ArchetypeCard({ profile, shareId }: Props) {
       </div>
 
       <div className="border-t border-[#111] pt-4 text-xs leading-relaxed">
-        <p className="text-[#2a5c2a]">
+        <p className="text-terminal-green-muted">
           Similar a:{' '}
           <span className="text-terminal-green-dim">{profile.historicalFigure.name}</span>
         </p>
-        <p className="text-[#2a5c2a] mt-1">{profile.historicalFigure.reason}</p>
+        <p className="text-terminal-green-muted mt-1">{profile.historicalFigure.reason}</p>
       </div>
 
       <p className="text-terminal-green-muted text-xs italic leading-relaxed">{profile.verdict}</p>
 
-      <ShareDialog shareId={shareId} />
+      {!readOnly && <ShareDialog shareId={shareId} />}
     </div>
   );
 }

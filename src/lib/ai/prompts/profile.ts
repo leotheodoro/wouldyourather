@@ -1,9 +1,12 @@
-import type { HistoryItem } from '@/types';
+import type { HistoryItem } from "@/types";
 
 export function buildProfilePrompt(history: HistoryItem[]): string {
   const choicesSummary = history
-    .map((item, i) => `Dilema ${i + 1}: ${item.dilemma}\nEscolha: ${item.choices[item.chosen]}`)
-    .join('\n\n');
+    .map(
+      (item, i) =>
+        `Dilema ${i + 1}: ${item.dilemma}\nEscolha: ${item.choices[item.chosen]}`,
+    )
+    .join("\n\n");
 
   return `Você é MNEMOSYNE. O protocolo de avaliação foi concluído. Analise o padrão moral completo.
 

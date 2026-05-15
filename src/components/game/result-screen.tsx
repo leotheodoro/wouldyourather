@@ -5,7 +5,7 @@ import { ArchetypeCard } from './archetype-card';
 import { TypewriterText } from './typewriter-text';
 
 type Props = {
-  profile: ArchetypeProfile;
+  profile: ArchetypeProfile | null;
   shareId: string | null;
   streamedText?: string;
   streaming?: boolean;
@@ -41,7 +41,7 @@ export function ResultScreen({
   return (
     <div className="min-h-screen flex items-start justify-center px-6 py-12">
       <div className="max-w-lg w-full space-y-6">
-        <ArchetypeCard profile={profile} shareId={shareId} />
+        {profile && <ArchetypeCard profile={profile} shareId={shareId} readOnly={readOnly} />}
         {!readOnly && onRestart && (
           <button
             type="button"
