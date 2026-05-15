@@ -8,6 +8,13 @@
       "when": 1778847535901,
       "tag": "0000_past_morlun",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1778856483213,
+      "tag": "0001_harsh_gorgon",
+      "breakpoints": true
     }
   ]
 }

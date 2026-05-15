@@ -1,0 +1,1 @@
+ALTER TABLE "shared_profiles" ADD COLUMN "language" text DEFAULT 'pt' NOT NULL;

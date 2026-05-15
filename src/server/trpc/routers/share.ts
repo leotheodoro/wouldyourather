@@ -1,10 +1,10 @@
-import "server-only";
-import { TRPCError } from "@trpc/server";
-import { eq } from "drizzle-orm";
-import { z } from "zod";
-import { archetypeProfileSchema, historyItemSchema } from "@/lib/ai/validation";
-import { sharedProfiles } from "@/server/db/schema";
-import { createTRPCRouter, publicProcedure } from "../init";
+import 'server-only';
+import { TRPCError } from '@trpc/server';
+import { eq } from 'drizzle-orm';
+import { z } from 'zod';
+import { archetypeProfileSchema, historyItemSchema } from '@/lib/ai/validation';
+import { sharedProfiles } from '@/server/db/schema';
+import { createTRPCRouter, publicProcedure } from '../init';
 
 export const shareRouter = createTRPCRouter({
   saveProfile: publicProcedure
@@ -12,18 +12,15 @@ export const shareRouter = createTRPCRouter({
       z.object({
         profile: archetypeProfileSchema,
         history: z.array(historyItemSchema).max(7),
+        language: z.enum(['pt', 'en']).default('pt'),
       }),
     )
     .mutation(async ({ ctx, input }) => {
       const [row] = await ctx.db
         .insert(sharedProfiles)
-        .values({ profile: input.profile, history: input.history })
+        .values({ profile: input.profile, history: input.history, language: input.language })
         .returning({ id: sharedProfiles.id });
-      if (!row)
-        throw new TRPCError({
-          code: "INTERNAL_SERVER_ERROR",
-          message: "Insert failed",
-        });
+      if (!row) throw new TRPCError({ code: 'INTERNAL_SERVER_ERROR', message: 'Insert failed' });
       return { id: row.id };
     }),
 
@@ -34,11 +31,7 @@ export const shareRouter = createTRPCRouter({
         .select()
         .from(sharedProfiles)
         .where(eq(sharedProfiles.id, input.id));
-      if (!row)
-        throw new TRPCError({
-          code: "NOT_FOUND",
-          message: "Perfil não encontrado",
-        });
-      return { profile: row.profile, history: row.history };
+      if (!row) throw new TRPCError({ code: 'NOT_FOUND', message: 'Perfil não encontrado' });
+      return { profile: row.profile, history: row.history, language: row.language };
     }),
 });

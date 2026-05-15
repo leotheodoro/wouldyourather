@@ -2,14 +2,17 @@
 
 import { Dialog } from '@base-ui-components/react/dialog';
 import { useState } from 'react';
+import { type Lang, translations } from '@/lib/i18n';
 import { buildShareUrl } from '@/lib/share-url';
 
 type Props = {
   shareId: string | null;
+  lang: Lang;
 };
 
-export function ShareDialog({ shareId }: Props) {
+export function ShareDialog({ shareId, lang }: Props) {
   const [copied, setCopied] = useState(false);
+  const t = translations[lang].share;
 
   const shareUrl = shareId ? buildShareUrl(shareId) : '';
 
@@ -36,7 +39,7 @@ export function ShareDialog({ shareId }: Props) {
                    hover:border-terminal-green hover:text-terminal-green
                    transition-colors"
       >
-        &gt; COMPARTILHAR RESULTADO
+        {t.trigger}
       </Dialog.Trigger>
       <Dialog.Portal>
         <Dialog.Backdrop className="fixed inset-0 bg-black/80 z-40" />
@@ -46,7 +49,7 @@ export function ShareDialog({ shareId }: Props) {
                                   p-6 w-full max-w-md font-mono space-y-4"
         >
           <Dialog.Title className="text-terminal-green text-xs tracking-widest">
-            COMPARTILHAR RESULTADO
+            {t.title}
           </Dialog.Title>
           <p className="text-terminal-green-dim text-xs break-all">{shareUrl}</p>
           <div className="flex gap-3">
@@ -58,14 +61,14 @@ export function ShareDialog({ shareId }: Props) {
                          hover:border-terminal-green hover:text-terminal-green
                          transition-colors"
             >
-              {copied ? '> LINK COPIADO!' : '> COPIAR LINK'}
+              {copied ? t.linkCopied : t.copyLink}
             </button>
             <Dialog.Close
               className="border border-[#1a1a1a] text-[#333] px-4 py-2 text-xs tracking-widest
                           hover:border-terminal-green-dark hover:text-terminal-green-dark
                           transition-colors"
             >
-              &gt; FECHAR
+              {t.close}
             </Dialog.Close>
           </div>
         </Dialog.Popup>

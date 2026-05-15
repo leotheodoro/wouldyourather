@@ -1,5 +1,5 @@
-import { createTRPCRouter } from "./init";
-import { shareRouter } from "./routers/share";
+import { createTRPCRouter } from './init';
+import { shareRouter } from './routers/share';
 
 export const appRouter = createTRPCRouter({
   share: shareRouter,

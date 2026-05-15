@@ -1,6 +1,6 @@
-import { initTRPC, StandardSchemaV1Error } from "@trpc/server";
-import { cache } from "react";
-import { db } from "../db";
+import { initTRPC, StandardSchemaV1Error } from '@trpc/server';
+import { cache } from 'react';
+import { db } from '../db';
 
 export const createTRPCContext = cache(async () => {
   return { db };
@@ -24,7 +24,7 @@ const t = initTRPC.context<typeof createTRPCContext>().create({
           formErrors.push(issue.message);
         } else {
           const key = String(
-            typeof path[0] === "object" && path[0] !== null && "key" in path[0]
+            typeof path[0] === 'object' && path[0] !== null && 'key' in path[0]
               ? path[0].key
               : path[0],
           );

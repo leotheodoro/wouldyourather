@@ -1,6 +1,6 @@
-import "server-only";
-import { createCallerFactory, createTRPCContext } from "@/server/trpc/init";
-import { appRouter } from "@/server/trpc/router";
+import 'server-only';
+import { createCallerFactory, createTRPCContext } from '@/server/trpc/init';
+import { appRouter } from '@/server/trpc/router';
 
 const createCaller = createCallerFactory(appRouter);
 

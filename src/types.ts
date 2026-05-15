@@ -27,7 +27,7 @@ export type ArchetypeProfile = {
   verdict: string;
 };
 
-export type GamePhase = "intro" | "streaming" | "dilemma" | "result";
+export type GamePhase = 'intro' | 'streaming' | 'dilemma' | 'result';
 
 export type GameState = {
   phase: GamePhase;
@@ -39,4 +39,5 @@ export type GameState = {
   } | null;
   profile: ArchetypeProfile | null;
   error: string | null;
+  language: import('@/lib/i18n').Lang;
 };

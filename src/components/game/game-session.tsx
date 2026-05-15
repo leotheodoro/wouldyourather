@@ -6,7 +6,7 @@ import { IntroScreen } from './intro-screen';
 import { ResultScreen } from './result-screen';
 
 export function GameSession() {
-  const { state, streamedText, streaming, shareId, error, startGame, choose, restart } =
+  const { state, streamedText, streaming, shareId, lang, error, startGame, choose, restart } =
     useGameSession();
 
   if (state.phase === 'intro') {
@@ -21,6 +21,7 @@ export function GameSession() {
         streamedText={streamedText}
         streaming={streaming}
         onRestart={restart}
+        lang={lang}
       />
     );
   }
@@ -33,6 +34,7 @@ export function GameSession() {
       error={error}
       onChoose={choose}
       onRetry={startGame}
+      lang={lang}
     />
   );
 }

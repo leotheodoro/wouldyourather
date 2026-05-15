@@ -1,5 +1,6 @@
 'use client';
 
+import { type Lang, translations } from '@/lib/i18n';
 import type { GameState } from '@/types';
 import { ChoiceCard } from './choice-card';
 import { TypewriterText } from './typewriter-text';
@@ -10,7 +11,8 @@ type Props = {
   streaming: boolean;
   error: string | null;
   onChoose: (index: 0 | 1) => void;
-  onRetry: () => void;
+  onRetry: (lang: Lang) => void;
+  lang: Lang;
 };
 
 function complexityBar(index: number): string {
@@ -46,16 +48,23 @@ function StreamingContent({ text }: { text: string }) {
   );
 }
 
-export function DilemmaScreen({ state, streamedText, streaming, error, onChoose, onRetry }: Props) {
+export function DilemmaScreen({
+  state,
+  streamedText,
+  streaming,
+  error,
+  onChoose,
+  onRetry,
+  lang,
+}: Props) {
+  const t = translations[lang].dilemma;
   const lastItem = state.history[state.history.length - 1] ?? null;
 
   if (streaming && state.dilemmaIndex === 0 && !streamedText) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6">
         <div className="max-w-lg w-full font-mono space-y-4">
-          <p className="text-terminal-green-dark text-xs tracking-widest">
-            INICIALIZANDO PROTOCOLO MNEMOSYNE...
-          </p>
+          <p className="text-terminal-green-dark text-xs tracking-widest">{t.initializing}</p>
           <div className="h-px bg-[#111] overflow-hidden">
             <div
               className="h-full bg-terminal-green w-1/4"
@@ -71,14 +80,14 @@ export function DilemmaScreen({ state, streamedText, streaming, error, onChoose,
     return (
       <div className="min-h-screen flex items-center justify-center px-6">
         <div className="max-w-lg w-full space-y-4 font-mono">
-          <p className="text-red-500 text-sm">&gt; ERRO: MNEMOSYNE não respondeu.</p>
+          <p className="text-red-500 text-sm">{t.error}</p>
           <button
             type="button"
-            onClick={onRetry}
+            onClick={() => onRetry(lang)}
             className="border border-red-800 text-red-500 px-4 py-2 text-xs
                        tracking-widest hover:border-red-500 transition-colors"
           >
-            [TENTAR NOVAMENTE]
+            {t.retry}
           </button>
         </div>
       </div>
@@ -89,8 +98,12 @@ export function DilemmaScreen({ state, streamedText, streaming, error, onChoose,
     <div className="min-h-screen flex items-center justify-center px-6">
       <div className="max-w-lg w-full space-y-6 font-mono">
         <div className="flex justify-between text-xs text-terminal-green-dark">
-          <span>DILEMA #{state.dilemmaIndex + 1} / 7</span>
-          <span>COMPLEXIDADE: {complexityBar(state.dilemmaIndex)}</span>
+          <span>
+            {t.label} #{state.dilemmaIndex + 1} / 7
+          </span>
+          <span>
+            {t.complexity} {complexityBar(state.dilemmaIndex)}
+          </span>
         </div>
 
         {streaming && <StreamingContent text={streamedText} />}

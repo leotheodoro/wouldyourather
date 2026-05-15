@@ -1,5 +1,6 @@
 'use client';
 
+import { type Lang, translations } from '@/lib/i18n';
 import type { ArchetypeProfile } from '@/types';
 import { ArchetypeCard } from './archetype-card';
 import { TypewriterText } from './typewriter-text';
@@ -11,6 +12,7 @@ type Props = {
   streaming?: boolean;
   onRestart?: () => void;
   readOnly?: boolean;
+  lang: Lang;
 };
 
 export function ResultScreen({
@@ -20,14 +22,15 @@ export function ResultScreen({
   streaming = false,
   onRestart,
   readOnly = false,
+  lang,
 }: Props) {
+  const t = translations[lang].result;
+
   if (streaming) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6">
         <div className="max-w-lg w-full font-mono space-y-4">
-          <p className="text-terminal-green-dark text-xs tracking-widest">
-            PROCESSANDO ANÁLISE MORAL...
-          </p>
+          <p className="text-terminal-green-dark text-xs tracking-widest">{t.processing}</p>
           {!streamedText ? (
             <div className="h-px bg-[#111] overflow-hidden">
               <div
@@ -50,7 +53,9 @@ export function ResultScreen({
   return (
     <div className="min-h-screen flex items-start justify-center px-6 py-12">
       <div className="max-w-lg w-full space-y-6">
-        {profile && <ArchetypeCard profile={profile} shareId={shareId} readOnly={readOnly} />}
+        {profile && (
+          <ArchetypeCard profile={profile} shareId={shareId} readOnly={readOnly} lang={lang} />
+        )}
         {!readOnly && onRestart && (
           <button
             type="button"
@@ -60,7 +65,7 @@ export function ResultScreen({
                        hover:border-terminal-green-dark hover:text-terminal-green-dark
                        transition-colors"
           >
-            &gt; NOVO PROTOCOLO
+            {t.newProtocol}
           </button>
         )}
       </div>
