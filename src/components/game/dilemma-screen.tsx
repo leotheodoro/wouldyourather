@@ -49,7 +49,7 @@ function StreamingContent({ text }: { text: string }) {
 export function DilemmaScreen({ state, streamedText, streaming, error, onChoose, onRetry }: Props) {
   const lastItem = state.history[state.history.length - 1] ?? null;
 
-  if (streaming && state.dilemmaIndex === 0) {
+  if (streaming && state.dilemmaIndex === 0 && !streamedText) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6">
         <div className="max-w-lg w-full font-mono space-y-4">
