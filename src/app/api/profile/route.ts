@@ -5,7 +5,7 @@ import { buildProfilePrompt } from '@/lib/ai/prompts/profile';
 import { archetypeProfileSchema, historyItemSchema } from '@/lib/ai/validation';
 
 const bodySchema = z.object({
-  history: z.array(historyItemSchema),
+  history: z.array(historyItemSchema).max(7),
 });
 
 export async function POST(req: NextRequest) {

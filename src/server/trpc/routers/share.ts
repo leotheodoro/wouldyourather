@@ -11,7 +11,7 @@ export const shareRouter = createTRPCRouter({
     .input(
       z.object({
         profile: archetypeProfileSchema,
-        history: z.array(historyItemSchema),
+        history: z.array(historyItemSchema).max(7),
       }),
     )
     .mutation(async ({ ctx, input }) => {

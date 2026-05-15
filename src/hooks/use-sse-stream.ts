@@ -11,7 +11,7 @@ type UseSSEStream = {
     url: string,
     body: unknown,
     onToken: (token: string) => void,
-    onDone: (payload: SSEPayload) => void,
+    onDone: (payload: SSEPayload) => void | Promise<void>,
   ) => Promise<void>;
 };
 
@@ -24,7 +24,7 @@ export function useSSEStream(): UseSSEStream {
       url: string,
       body: unknown,
       onToken: (token: string) => void,
-      onDone: (payload: SSEPayload) => void,
+      onDone: (payload: SSEPayload) => void | Promise<void>,
     ) => {
       setStreaming(true);
       setError(null);
@@ -66,7 +66,7 @@ export function useSSEStream(): UseSSEStream {
                 if (parsed.error) {
                   setError('MNEMOSYNE não respondeu');
                 } else {
-                  onDone(parsed);
+                  await onDone(parsed);
                 }
                 return;
               }

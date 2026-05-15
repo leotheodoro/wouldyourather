@@ -5,7 +5,7 @@ import { buildDilemmaPrompt } from '@/lib/ai/prompts/dilemma';
 import { dilemmaResponseSchema, historyItemSchema } from '@/lib/ai/validation';
 
 const bodySchema = z.object({
-  history: z.array(historyItemSchema),
+  history: z.array(historyItemSchema).max(7),
 });
 
 export async function POST(req: NextRequest) {
