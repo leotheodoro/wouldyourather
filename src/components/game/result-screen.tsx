@@ -24,15 +24,24 @@ export function ResultScreen({
   if (streaming) {
     return (
       <div className="min-h-screen flex items-center justify-center px-6">
-        <div className="max-w-lg w-full font-mono">
-          <p className="text-terminal-green-dark text-xs tracking-widest mb-4">
+        <div className="max-w-lg w-full font-mono space-y-4">
+          <p className="text-terminal-green-dark text-xs tracking-widest">
             PROCESSANDO ANÁLISE MORAL...
           </p>
-          <TypewriterText
-            text={streamedText}
-            isStreaming={streaming}
-            className="text-terminal-green text-sm leading-loose"
-          />
+          {!streamedText ? (
+            <div className="h-px bg-[#111] overflow-hidden">
+              <div
+                className="h-full bg-terminal-green w-1/4"
+                style={{ animation: 'progress-slide 1.5s linear infinite' }}
+              />
+            </div>
+          ) : (
+            <TypewriterText
+              text={streamedText}
+              isStreaming={streaming}
+              className="text-terminal-green text-sm leading-loose"
+            />
+          )}
         </div>
       </div>
     );
