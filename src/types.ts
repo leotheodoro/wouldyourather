@@ -20,10 +20,6 @@ export type ArchetypeProfile = {
     chaos: number;
     cruelty: number;
   };
-  historicalFigure: {
-    name: string;
-    reason: string;
-  };
   verdict: string;
 };
 

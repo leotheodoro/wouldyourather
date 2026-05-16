@@ -1,8 +1,12 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+import { addToCollection, getCollection } from '@/lib/collection';
 import { type Lang, translations } from '@/lib/i18n';
+import { matchPersonality, type Personality } from '@/lib/personalities';
 import type { ArchetypeProfile } from '@/types';
 import { ArchetypeCard } from './archetype-card';
+import { CollectionGrid } from './collection-grid';
 import { TypewriterText } from './typewriter-text';
 
 type Props = {
@@ -25,6 +29,23 @@ export function ResultScreen({
   lang,
 }: Props) {
   const t = translations[lang].result;
+
+  const [personality, setPersonality] = useState<Personality | null>(null);
+  const [unlockedIds, setUnlockedIds] = useState<string[]>([]);
+  const [isNewUnlock, setIsNewUnlock] = useState(false);
+
+  useEffect(() => {
+    if (!profile) return;
+    const matched = matchPersonality(profile.traits);
+    setPersonality(matched);
+    if (!readOnly) {
+      const { collection, isNew } = addToCollection(matched.id);
+      setUnlockedIds(collection);
+      setIsNewUnlock(isNew);
+    } else {
+      setUnlockedIds(getCollection());
+    }
+  }, [profile, readOnly]);
 
   if (streaming) {
     return (
@@ -54,8 +75,16 @@ export function ResultScreen({
     <div className="min-h-screen flex items-start justify-center px-6 py-12">
       <div className="max-w-lg w-full space-y-6">
         {profile && (
-          <ArchetypeCard profile={profile} shareId={shareId} readOnly={readOnly} lang={lang} />
+          <ArchetypeCard
+            profile={profile}
+            shareId={shareId}
+            readOnly={readOnly}
+            lang={lang}
+            personality={personality}
+            isNewUnlock={isNewUnlock}
+          />
         )}
+        <CollectionGrid unlockedIds={unlockedIds} lang={lang} />
         {!readOnly && onRestart && (
           <button
             type="button"

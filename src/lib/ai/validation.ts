@@ -15,10 +15,6 @@ export const archetypeProfileSchema = z.object({
     chaos: z.number().min(0).max(100),
     cruelty: z.number().min(0).max(100),
   }),
-  historicalFigure: z.object({
-    name: z.string().min(1),
-    reason: z.string().min(1),
-  }),
   verdict: z.string().min(1),
 });
 

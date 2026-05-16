@@ -2,6 +2,7 @@
 
 import { ShareDialog } from '@/components/ui/share-dialog';
 import { type Lang, translations } from '@/lib/i18n';
+import type { Personality } from '@/lib/personalities';
 import type { ArchetypeProfile } from '@/types';
 import { TraitBar } from './trait-bar';
 
@@ -10,9 +11,18 @@ type Props = {
   shareId: string | null;
   readOnly?: boolean;
   lang: Lang;
+  personality: Personality | null;
+  isNewUnlock?: boolean;
 };
 
-export function ArchetypeCard({ profile, shareId, readOnly = false, lang }: Props) {
+export function ArchetypeCard({
+  profile,
+  shareId,
+  readOnly = false,
+  lang,
+  personality,
+  isNewUnlock = false,
+}: Props) {
   const t = translations[lang].result;
 
   return (
@@ -21,9 +31,21 @@ export function ArchetypeCard({ profile, shareId, readOnly = false, lang }: Prop
         <p className="text-terminal-green-dark text-xs tracking-widest mb-2">
           {t.analysisComplete}
         </p>
-        <h1 className="text-terminal-green text-xl font-bold tracking-widest mb-3">
-          {profile.archetypeName}
-        </h1>
+        {personality && (
+          <div className="flex items-center gap-3 mb-3">
+            <span className="text-3xl">{personality.emoji}</span>
+            <div>
+              <h1 className="text-terminal-green text-xl font-bold tracking-widest">
+                {personality.name}
+              </h1>
+              {isNewUnlock && (
+                <span className="text-[10px] tracking-widest text-terminal-green-dark border border-terminal-green-dark px-1">
+                  NEW
+                </span>
+              )}
+            </div>
+          </div>
+        )}
         <p className="text-terminal-green-dim text-xs italic leading-relaxed">
           &quot;{profile.quote}&quot;
         </p>
@@ -34,14 +56,6 @@ export function ArchetypeCard({ profile, shareId, readOnly = false, lang }: Prop
         <TraitBar trait="pragmatism" value={profile.traits.pragmatism} lang={lang} />
         <TraitBar trait="chaos" value={profile.traits.chaos} lang={lang} />
         <TraitBar trait="cruelty" value={profile.traits.cruelty} lang={lang} />
-      </div>
-
-      <div className="border-t border-[#111] pt-4 text-xs leading-relaxed">
-        <p className="text-terminal-green-muted">
-          {t.similarTo}{' '}
-          <span className="text-terminal-green-dim">{profile.historicalFigure.name}</span>
-        </p>
-        <p className="text-terminal-green-muted mt-1">{profile.historicalFigure.reason}</p>
       </div>
 
       <p className="text-terminal-green-muted text-xs italic leading-relaxed">{profile.verdict}</p>

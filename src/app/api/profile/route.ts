@@ -39,7 +39,7 @@ export async function POST(req: NextRequest) {
     });
   }
 
-  const textToStream = `${profile.archetypeName}\n\n"${profile.quote}"\n\n${profile.verdict}`;
+  const textToStream = `"${profile.quote}"\n\n${profile.verdict}`;
 
   const stream = new ReadableStream({
     async start(controller) {

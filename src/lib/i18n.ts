@@ -22,7 +22,7 @@ export const translations = {
       processing: 'PROCESSANDO ANÁLISE MORAL...',
       newProtocol: '> NOVO PROTOCOLO',
       analysisComplete: 'ANÁLISE CONCLUÍDA // PERFIL GERADO',
-      similarTo: 'Similar a:',
+      collection: 'COLEÇÃO DE PERSONALIDADES',
     },
     traits: {
       empathy: 'Empatia',
@@ -63,7 +63,7 @@ export const translations = {
       processing: 'PROCESSING MORAL ANALYSIS...',
       newProtocol: '> NEW PROTOCOL',
       analysisComplete: 'ANALYSIS COMPLETE // PROFILE GENERATED',
-      similarTo: 'Similar to:',
+      collection: 'PERSONALITY COLLECTION',
     },
     traits: {
       empathy: 'Empathy',
